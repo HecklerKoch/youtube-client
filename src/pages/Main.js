@@ -5,9 +5,16 @@ import { getVideos } from "../api/video";
 import { useState, useEffect } from "react";
 const Main = () => {
   const [videos, setVideos] = useState([]);
+  const [page, setPage] = useState(1);
+  const [more, setMore] = useState(true);
+
   const videoAPI = async () => {
     const result = await getVideos();
     setVideos(result.data);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(entries);
+    });
   };
   useEffect(() => {
     videoAPI();
@@ -57,6 +64,8 @@ const Main = () => {
             </div>
           ))}
         </section>
+        {/* 스크롤이 여기에 도달하면 다음 페이지 올수 있도록*/}
+        div
       </div>
     </main>
   );
