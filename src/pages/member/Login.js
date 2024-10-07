@@ -7,7 +7,6 @@ import { useAuth } from "../../contexts/AuthContext";
 const Login = () => {
   const navigate = useNavigate();
   const { login: authLogin } = useAuth(); // login이 다른 함수명으로 있어서 이름을 변경
-
   const [member, setMember] = useState({
     id: "",
     password: "",
@@ -26,25 +25,37 @@ const Login = () => {
   };
   const signup = () => {
     navigate("/signup");
-    const google = () => {
-      window.location.href =
-        "http://localhost:8080/oauth2/authorization/google";
-    };
+  };
+  const google = () => {
+    window.location.href = "http://localhost:8080/oauth2/authorization/google";
   };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 shadow-md max-w-md w-full">
-        <h1 className="text-3xl font-bold text-center mb-8" onClick={submit}>
-          로그인
-        </h1>
+        <h1 className="text-3xl font-bold text-center mb-8">로그인</h1>
         <div>
+          <Input
+            label="아이디"
+            type="text"
+            placeholder="아이디를 입력해주세요"
+            value={member.id}
+            change={(e) => setMember({ ...member, id: e.target.value })}
+          />
+          <Input
+            label="비밀번호"
+            type="password"
+            placeholder="비밀번호를 입력해주세요"
+            value={member.password}
+            change={(e) => setMember({ ...member, password: e.target.value })}
+          />
           <button
             type="button"
             className="bg-black text-white w-full py-3 font-bold rounded hover:bg-red-600"
+            onClick={submit}
           >
             로그인
           </button>
-          or
+          <p className="text-center mt-4">or</p>
           <button
             type="button"
             className="bg-blue-500 text-white w-full py-3 mt-4 font-bold rounded hover:bg-blue-600"

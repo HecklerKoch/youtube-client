@@ -1,33 +1,41 @@
 import "../assets/style.css";
 import { FaHouseChimney } from "react-icons/fa6";
 import { FaFolder } from "react-icons/fa";
-import { getVideos } from "../api/video";
-import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 const Main = () => {
-  const [videos, setVideos] = useState([]);
-  const [page, setPage] = useState(1);
-  const [more, setMore] = useState(true);
+  const { videos, setPage } = useOutletContext();
+  const navigate = useNavigate();
 
-  const videoAPI = async () => {
-    const result = await getVideos();
-    setVideos(result.data);
-
-    useEffect(() => {
-      const observer = new IntersectionObserver(entries);
-    });
+  const scroll = () => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop >=
+      document.documentElement.offsetHeight
+    ) {
+      setPage((page) => page + 1);
+    }
   };
+
+  const detail = () => {
+    navigate("/video/4");
+  };
+
   useEffect(() => {
-    videoAPI();
-  }, []);
+    window.addEventListener("scroll", scroll);
+    return () => {
+      window.removeEventListener("scroll", scroll);
+    };
+  }, [setPage]);
+
   return (
     <main>
       <aside>
         <a href="">
-          {" "}
           <FaHouseChimney /> <span>홈</span>
-        </a>{" "}
+        </a>
         <a href="">
-          {" "}
           <FaFolder /> <span>구독</span>
         </a>
       </aside>
@@ -50,7 +58,7 @@ const Main = () => {
                 <img src={video.videoImg} />
                 <video src={video.videoUrl} controls></video>
               </div>
-              <div className="video-info">
+              <div className="video-info" onClick={detail}>
                 <img src={video.channel.channelImg} />
                 <div className="video-desc">
                   <h2>{video.videoTitle}</h2>
@@ -64,8 +72,6 @@ const Main = () => {
             </div>
           ))}
         </section>
-        {/* 스크롤이 여기에 도달하면 다음 페이지 올수 있도록*/}
-        div
       </div>
     </main>
   );

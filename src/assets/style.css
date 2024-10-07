@@ -44,7 +44,6 @@ main section {
   padding-top: 45px;
   display: flex;
 }
-/* 반응형 */
 
 @media screen and (min-width: 880px) {
   main aside {

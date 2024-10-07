@@ -8,10 +8,10 @@ export const signup = async (data) => {
   return await instance.post("signup", data);
 };
 
-export const login = async () => {
+export const login = async (data) => {
   try {
     return await instance.post("login", data);
   } catch {
-    new Error("Login Failed");
+    new Error("LOGIN FAIL");
   }
 };
